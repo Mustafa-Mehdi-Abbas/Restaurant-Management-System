@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<style>
+    body, h1, h5 {
+        font-family: "Raleway", sans-serif;
+    }
+
+    body, html {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+.img {
+  background-image: url('https://images.unsplash.com/photo-1491960693564-421771d727d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGJ1cmdlciUyMHBpfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60');
+  min-height: 100%;
+  background-position: center;
+  background-size: cover;
+}
+    input[type=text], select {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    
+    input[type=submit] {
+      width: 100%;
+      background-color: #4CAF50;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    input[type=submit]:hover {
+      background-color: #45a049;
+    }
+    
+    divi {
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="img w3-display-container w3-text-white">
+  <div class="w3-display-middle w3-jumbo">
+    <p>logo</p>
+  </div>
+  <div class="w3-display-topleft w3-container w3-xlarge">
+    <p><button onclick="document.getElementById('menu').style.display='block'; getMenuData();" class="w3-button w3-black">menu</button></p>
+    <p><button onclick="document.getElementById('user').style.display='block'; getUserData();" class="w3-button w3-black">User</button></p>
+    <p><button onclick="document.getElementById('customer').style.display='block'; getCustomerData();" class="w3-button w3-black">Customer</button></p>
+  </div>
+  <div class="w3-display-bottomleft w3-container">
+    <p class="w3-xlarge">monday - friday 10-23 | saturday 14-02</p>
+    <p class="w3-large">42 village St, New York</p>
+    <p>powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+  </div>
+</div>
+
+
+
+<!-- Menu Modal -->
+<div id="menu" class="w3-modal">
+    <div class="w3-modal-content w3-animate-zoom">
+        <div class="w3-container w3-black w3-display-container">
+            <span onclick="document.getElementById('menu').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
+            <h1>Main Courses <button onclick="document.getElementById('add_item').style.display='block'; openAddMenuModal();" class="w3-button w3-black">Add</button></h1>
+        </div>
+        <div class="w3-container" id="menu-data">
+            <!-- Data from API will be displayed here in a table -->
+            <table class="w3-table-all">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <b><th>Price</th></b>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="menu-table-body">
+                </tbody>
+            </table>
+        </div>
+        <div class="w3-container w3-black">
+        </div>
+    </div>
+</div>
+
+<!-- Add Item Modal -->
+<div id="add_item" class="w3-modal">
+  <div class="w3-modal-content w3-animate-zoom">
+      <div class="w3-container w3-black w3-display-container">
+          <!-- ... Existing content ... -->
+      </div>
+      <div class="w3-container" id="menu-data">
+          <form action="/add_menu" method="POST">
+              <label for="Description">Description</label>
+              <input type="text" id="description" name="description">
+
+              <label for="Item_name">Item name</label>
+              <input type="text" id="item_name" name="item_name">
+
+              <label for="Price">Price</label>
+              <input type="text" id="price" name="price">
+
+              <input type="hidden" id="edit_menu_id" name="edit_menu_id" value=""> <!-- Hidden field to store the menu item ID -->
+              <input type="submit" value="Submit">
+          </form>
+      </div>
+      <div class="w3-container w3-black">
+      </div>
+  </div>
+</div>
+<!-- Add Customer Modal -->
+<div id="add_customer" class="w3-modal">
+  <div class="w3-modal-content w3-animate-zoom">
+      <div class="w3-container w3-black w3-display-container">
+          <!-- ... Existing content ... -->
+      </div>
+      <div class="w3-container" id="menu-data">
+          <form action="/add_customer" method="POST">
+              <label for="user_id">User Id</label>
+              <input type="text" id="user_id" name="user_id">
+
+              <label for="phone">Phone</label>
+              <input type="text" id="phone" name="phone">
+
+              <label for="address">Address</label>
+              <input type="text" id="address" name="address">
+
+              <input type="hidden" id="edit_customer_id" name="edit_customer_id" value=""> <!-- Hidden field to store the menu item ID -->
+              <input type="submit" value="Submit">
+          </form>
+      </div>
+      <div class="w3-container w3-black">
+      </div>
+  </div>
+</div>
+
+
+<!-- Edit Item Modal -->
+<div id="edit_item" class="w3-modal">
+  <div class="w3-modal-content w3-animate-zoom">
+      <div class="w3-container w3-black w3-display-container">
+          <span onclick="document.getElementById('edit_item').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
+          <h1>Edit Item</h1>
+      </div>
+      <div class="w3-container" id="menu-data">
+          <form onsubmit="event.preventDefault(); updateMenuItem();">
+              <label for="edit_description">Description</label>
+              <input type="text" id="edit_description" name="edit_description">
+
+              <label for="edit_item_name">Item name</label>
+              <input type="text" id="edit_item_name" name="edit_item_name">
+
+              <label for="edit_price">Price</label>
+              <input type="text" id="edit_price" name="edit_price">
+
+              <input type="hidden" id="edit_menu_id" name="edit_menu_id" value=""> <!-- Hidden field to store the menu item ID -->
+              <input type="submit" value="Edit">
+          </form>
+      </div>
+      <div class="w3-container w3-black">
+      </div>
+  </div>
+</div>
+
+<!-- User Modal -->
+<div id="user" class="w3-modal">
+  <div class="w3-modal-content w3-animate-zoom">
+      <div class="w3-container w3-black w3-display-container">
+          <span onclick="document.getElementById('user').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
+          <h1>Main Courses <button onclick="document.getElementById('add_user').style.display='block'; openAddUserModal();" class="w3-button w3-black">Add</button></h1>
+      </div>
+      <div class="w3-container" id="user-data">
+          <!-- Data from API will be displayed here in a table -->
+          <table class="w3-table-all">
+              <thead>
+                  <tr>
+                      <th>Name</th>
+                      <th>Role</th>
+                      <th>Action</th>
+                  </tr>
+              </thead>
+              <tbody id="user-table-body">
+              </tbody>
+          </table>
+      </div>
+      <div class="w3-container w3-black">
+      </div>
+  </div>
+</div>
+<!-- Customer Modal -->
+<div id="customer" class="w3-modal">
+  <div class="w3-modal-content w3-animate-zoom">
+      <div class="w3-container w3-black w3-display-container">
+          <span onclick="document.getElementById('customer').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
+          <h1>Customers List <button onclick="document.getElementById('add_customer').style.display='block'; openAddCustomerModal();" class="w3-button w3-black">Add</button></h1>
+      </div>
+      <div class="w3-container" id="user-data">
+          <!-- Data from API will be displayed here in a table -->
+          <table class="w3-table-all">
+              <thead>
+                  <tr>
+                      <th>User Id</th>
+                      <th>Phone</th>
+                      <th>Address</th>
+                      <th>Action</th>
+                  </tr>
+              </thead>
+              <tbody id="customer-table-body">
+              </tbody>
+          </table>
+      </div>
+      <div class="w3-container w3-black">
+      </div>
+  </div>
+</div>
+
+<!-- Edit User Modal -->
+<div id="edit_user" class="w3-modal">
+  <div class="w3-modal-content w3-animate-zoom">
+      <div class="w3-container w3-black w3-display-container">
+          <span onclick="document.getElementById('edit_item').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
+          <h1>Edit User</h1>
+      </div>
+      <div class="w3-container" id="user-data">
+          <form onsubmit="event.preventDefault(); updateUserItem();">
+              <label for="edit_name">Name</label>
+              <input type="text" id="edit_name" name="edit_name">
+
+              <label for="edit_role">Role</label>
+              <input type="text" id="edit_role" name="edit_role">
+
+              <input type="hidden" id="edit_user_id" name="edit_user_id" value=""> <!-- Hidden field to store the user item ID -->
+              <input type="submit" value="Edit">
+          </form>
+      </div>
+      <div class="w3-container w3-black">
+      </div>
+  </div>
+</div>
+
+<!-- Edit Customer Modal -->
+<div id="edit_customer" class="w3-modal">
+  <div class="w3-modal-content w3-animate-zoom">
+      <div class="w3-container w3-black w3-display-container">
+          <span onclick="document.getElementById('edit_customer').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
+          <h1>Edit Customer</h1>
+      </div>
+      <div class="w3-container" id="customer-data">
+          <form onsubmit="event.preventDefault(); updateCustomerItem();">
+              <label for="edit_userId">User Id</label>
+              <input type="text" id="edit_userId" name="edit_userId">
+
+              <label for="edit_phone">Phone</label>
+              <input type="text" id="edit_phone" name="edit_phone">
+
+              <label for="edit_address">Address</label>
+              <input type="text" id="edit_address" name="edit_address">
+
+              <input type="hidden" id="edit_customer_id" name="edit_customer_id" value=""> <!-- Hidden field to store the user item ID -->
+              <input type="submit" value="Edit">
+          </form>
+      </div>
+      <div class="w3-container w3-black">
+      </div>
+  </div>
+</div>
+
+<!-- Add User Modal -->
+<div id="add_user" class="w3-modal">
+  <div class="w3-modal-content w3-animate-zoom">
+    <div class="w3-container w3-black w3-display-container">
+        <!-- ... Existing content ... -->
+    </div>
+    <div class="w3-container" id="user-data">
+        <form action="/add_user" method="POST">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name">
+
+            <label for="Role">Role</label>
+            <input type="text" id="role" name="role">
+
+            <input type="hidden" id="edit_user_id" name="edit_user_id" value=""> <!-- Hidden field to store the user item ID -->
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    <div class="w3-container w3-black">
+    </div>
+  </div>
+</div>
+
+<script>
+    function getMenuData() {
+      // Make the API call
+      fetch('/menu') // Assuming this endpoint returns the menu data
+        .then(response => response.json())
+        .then(data => {
+          console.log('Fetched data:', data); // Log the fetched data
+  
+          // Rest of the code to display the data in the modal
+          const menuDataDiv = document.getElementById('menu-table-body');
+          menuDataDiv.innerHTML = ''; // Clear previous data (if any)
+  
+          // Create HTML elements to display the data in a table
+          data.data.forEach(menuItem => {
+            const row = document.createElement('tr');
+            const itemNameCell = document.createElement('td');
+            const priceCell = document.createElement('td');
+            const descriptionCell = document.createElement('td');
+            const actionCell = document.createElement('td'); // Cell for Edit and Delete buttons
+
+            itemNameCell.textContent = menuItem[1]; // Item Name from data[i][1]
+            priceCell.textContent = menuItem[2]; // Price from data[i][2]
+            descriptionCell.textContent = menuItem[3];
+            // Edit button
+            const editButton = document.createElement('button');
+            editButton.textContent = 'Edit';
+            editButton.onclick = () => {
+                openEditMenuModal(menuItem[0]); // Passing the menu item ID to the function
+            };
+            actionCell.appendChild(editButton);
+
+            // Delete button
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = () => {
+              // Call the deleteMenu API passing the menu item ID
+              deleteMenu(menuItem[0]); // Assuming the menu item ID is at data[i][0]
+            };
+            actionCell.appendChild(deleteButton);
+            
+            row.appendChild(itemNameCell);
+            row.appendChild(priceCell);
+            row.appendChild(descriptionCell);
+            row.appendChild(actionCell);
+            
+            menuDataDiv.appendChild(row);
+          });
+        })
+        .catch(error => {
+          console.error('Error fetching menu data:', error);
+        });
+    }
+
+    // Function to call the editMenu API
+    // ... Existing code ...
+
+    function openEditMenuModal(menuId) {
+      fetch(`/menu/${menuId}`)
+          .then(response => response.json())
+          .then(data => {
+              console.log('Edit Menu Data:', data);
+  
+              // Populate the fields in the "add_item" div with the data
+              document.getElementById('edit_description').value = data.data[3]; // Assuming 'description' is the property name in the fetched data
+              document.getElementById('edit_item_name').value = data.data[1]; // Assuming 'item_name' is the property name in the fetched data
+              document.getElementById('edit_price').value = data.data[2]; // Assuming 'price' is the property name in the fetched data
+              document.getElementById('edit_menu_id').value = data.data[0]; // Assuming 'price' is the property name in the fetched data
+  
+              // Store the menu item ID in the hidden field
+             // document.getElementById('edit_menu_id').value = menuId;
+  
+              // Show the "add_item" div
+              document.getElementById('edit_item').style.display = 'block';
+          })
+          .catch(error => {
+              console.error('Error fetching menu item for edit:', error);
+          });
+  }
+    
+// ... Existing code ...
+
+  
+    // Function to call the deleteMenu API
+    function deleteMenu(menuId) {
+      fetch(`/del_menu/${menuId}`, { method: 'DELETE' })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Delete Menu Response:', data);
+          // You can refresh the menu table or handle any other logic after successful deletion
+          getMenuData();
+        })
+        .catch(error => {
+          console.error('Error deleting menu item:', error);
+        });
+    
+    function openAddMenuModal() {
+        const addMenuModal = document.getElementById('add-menu-modal');
+        console.log("addMenuModal",addMenuModal);
+        addMenuModal.style.display = 'block'; // Show the modal
+      }
+
+    }
+
+    function updateMenuItem() {
+      // Get the data from the edit_item div
+      const menuId = document.getElementById('edit_menu_id').value;
+      const description = document.getElementById('edit_description').value;
+      const itemName = document.getElementById('edit_item_name').value;
+      const price = document.getElementById('edit_price').value;
+  
+      // Build the form data
+      const formData = new FormData();
+      formData.append('menuId', menuId);
+      formData.append('item_name', itemName);
+      formData.append('price', price);
+      formData.append('description', description);
+  
+      // Make the PUT request to the API
+      fetch(`/upd_menu/${menuId}`, {
+          method: 'PUT',
+          body: formData,
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log('Update Menu Response:', data);
+          // You can handle the response data here if needed
+          // For example, close the modal after successful update
+          document.getElementById('edit_item').style.display = 'none';
+          // Refresh the menu data
+          getMenuData();
+      })
+      .catch(error => {
+          console.error('Error updating menu item:', error);
+      });
+  }
+  function getUserData() {
+    // Make the API call
+    fetch('/user') // Assuming this endpoint returns the user data
+      .then(response => response.json())
+      .then(data => {
+        console.log('Fetched data:', data); // Log the fetched data
+  
+        // Rest of the code to display the data in the modal
+        const userDataDiv = document.getElementById('user-table-body');
+        userDataDiv.innerHTML = ''; // Clear previous data (if any)
+  
+        // Create HTML elements to display the data in a table
+        data.data.forEach(userItem => {
+          const row = document.createElement('tr');
+          const nameCell = document.createElement('td');
+          const roleCell = document.createElement('td');
+          const actionCell = document.createElement('td'); // Cell for Edit and Delete buttons
+  
+          nameCell.textContent = userItem[1]; // Item Name from data[i][1]
+          roleCell.textContent = userItem[2]; // Price from data[i][2]
+  
+          // Edit button
+          const editButton = document.createElement('button');
+          editButton.textContent = 'Edit';
+          editButton.onclick = () => {
+            openEditUserModal(userItem[0]); // Passing the user item ID to the function
+          };
+          actionCell.appendChild(editButton);
+  
+          // Delete button
+          const deleteButton = document.createElement('button');
+          deleteButton.textContent = 'Delete';
+          deleteButton.onclick = () => {
+            // Call the deleteUser API passing the user item ID
+            deleteUser(userItem[0]); // Assuming the user item ID is at data[i][0]
+          };
+          actionCell.appendChild(deleteButton);
+  
+          row.appendChild(nameCell);
+          row.appendChild(roleCell);
+          row.appendChild(actionCell);
+  
+          userDataDiv.appendChild(row);
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching user data:', error);
+      });
+  }
+  
+
+    // Function to call the editUser API
+    // ... Existing code ...
+
+    function openEditUserModal(userId) {
+      fetch(`/user/${userId}`)
+          .then(response => response.json())
+          .then(data => {
+              console.log('Edit User Data:', data);
+
+              // Populate the fields in the "add_item" div with the data
+              document.getElementById('edit_name').value = data.data[1]; // Assuming 'item_name' is the property name in the fetched data
+              document.getElementById('edit_role').value = data.data[2]; // Assuming 'price' is the property name in the fetched data
+              document.getElementById('edit_user_id').value = data.data[0]; // Assuming 'price' is the property name in the fetched data
+
+              // Store the user item ID in the hidden field
+            // document.getElementById('edit_user_id').value = userId;
+
+              // Show the "add_item" div
+              document.getElementById('edit_user').style.display = 'block';
+          })
+          .catch(error => {
+              console.error('Error fetching user item for edit:', error);
+          });
+  }
+    
+    function openEditCustomerModal(customerId) {
+      fetch(`/customer/${customerId}`)
+          .then(response => response.json())
+          .then(data => {
+              console.log('Edit Customer Data:', data);
+              console.log(' data.data[1]:',  data.data[1]);
+              console.log("document.getElementById('edit_user_id').value:", document.getElementById('edit_userId').value);
+
+              // Populate the fields in the "add_item" div with the data
+              document.getElementById('edit_userId').value = data.data[1]; // Assuming 'item_name' is the property name in the fetched data
+              document.getElementById('edit_customer_id').value = data.data[0]; // Assuming 'item_name' is the property name in the fetched data
+              document.getElementById('edit_phone').value = data.data[2]; // Assuming 'price' is the property name in the fetched data
+              document.getElementById('edit_address').value = data.data[3]; // Assuming 'price' is the property name in the fetched data
+
+              // Store the user item ID in the hidden field
+            // document.getElementById('edit_user_id').value = userId;
+
+              // Show the "add_item" div
+              document.getElementById('edit_customer').style.display = 'block';
+          })
+          .catch(error => {
+              console.error('Error fetching user item for edit:', error);
+          });
+  }
+    
+  // ... Existing code ...
+    // Function to call the deleteUser API
+    function deleteUser(userId) {
+      fetch(`/del_user/${userId}`, { method: 'DELETE' })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Delete User Response:', data);
+          // You can refresh the user table or handle any other logic after successful deletion
+          getUserData();
+        })
+        .catch(error => {
+          console.error('Error deleting user item:', error);
+        });
+      function openAddUserModal() {
+        const addUserModal = document.getElementById('add-user');
+        console.log("addUserModal",addUserModal);
+        addUserModal.style.display = 'block'; // Show the modal
+      }
+    }
+    function deleteCustomer(customerId) {
+      fetch(`/del_customer/${customerId}`, { method: 'DELETE' })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Delete User Response:', data);
+          // You can refresh the user table or handle any other logic after successful deletion
+          getCustomerData();
+        })
+        .catch(error => {
+          console.error('Error deleting user item:', error);
+        });
+    }
+    function openAddCustomerModal() {
+      const addCustomerModal = document.getElementById('add-customer');
+      console.log("addCustomerModal",addCustomerModal);
+      addCustomerModal.style.display = 'block'; // Show the modal
+    }
+    function updateUserItem() {
+      // Get the data from the edit_item div
+      const userId = document.getElementById('edit_user_id').value;
+      const name = document.getElementById('edit_name').value;
+      const role = document.getElementById('edit_role').value;
+
+      // Build the form data
+      const formData = new FormData();
+      formData.append('userId', userId);
+      formData.append('name', name);
+      formData.append('role', role);
+
+      console.log("formData",formData);
+      
+      // Make the PUT request to the API
+      fetch(`/upd_user/${userId}`, {
+          method: 'PUT',
+          body: formData,
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log('Update User Response:', data);
+          // You can handle the response data here if needed
+          // For example, close the modal after successful update
+          document.getElementById('edit_user').style.display = 'none';
+          // Refresh the user data
+          getUserData();
+      })
+      .catch(error => {
+          console.error('Error updating user item:', error);
+      });
+  }
+    function updateCustomerItem() {
+      // Get the data from the edit_item div
+
+      const customerId = document.getElementById('edit_customer_id').value;
+      const userId = document.getElementById('edit_userId').value;
+      const phone = document.getElementById('edit_phone').value;
+      const address = document.getElementById('edit_address').value;
+
+      // Build the form data
+      const formData = new FormData();
+      formData.append('user_id', userId);
+      formData.append('phone', phone);
+      formData.append('address', address);
+
+      console.log("formData",formData);
+      
+      // Make the PUT request to the API
+      fetch(`/upd_customer/${customerId}`, {
+          method: 'PUT',
+          body: formData,
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log('Update User Response:', data);
+          // You can handle the response data here if needed
+          // For example, close the modal after successful update
+          document.getElementById('edit_customer').style.display = 'none';
+          // Refresh the user data
+          getCustomerData();
+      })
+      .catch(error => {
+          console.error('Error updating user item:', error);
+      });
+  }
+  //Customer Functions
+  function getCustomerData() {
+    // Make the API call
+    fetch('/customer') // Assuming this endpoint returns the user data
+      .then(response => response.json())
+      .then(data => {
+        console.log('Fetched data:', data); // Log the fetched data
+  
+        // Rest of the code to display the data in the modal
+        const userDataDiv = document.getElementById('customer-table-body');
+        userDataDiv.innerHTML = ''; // Clear previous data (if any)
+  
+        // Create HTML elements to display the data in a table
+        data.data.forEach(userItem => {
+          const row = document.createElement('tr');
+          const userIdCell = document.createElement('td');
+          const phoneCell = document.createElement('td');
+          const addressCell = document.createElement('td');
+          const actionCell = document.createElement('td'); // Cell for Edit and Delete buttons
+  
+          userIdCell.textContent = userItem[1]; // Item Name from data[i][1]
+          phoneCell.textContent = userItem[2]; // Price from data[i][2]
+          addressCell.textContent = userItem[3]; // Price from data[i][2]
+  
+          // Edit button
+          const editButton = document.createElement('button');
+          editButton.textContent = 'Edit';
+          editButton.onclick = () => {
+            openEditCustomerModal(userItem[0]); // Passing the user item ID to the function
+          };
+          actionCell.appendChild(editButton);
+  
+          // Delete button
+          const deleteButton = document.createElement('button');
+          deleteButton.textContent = 'Delete';
+          deleteButton.onclick = () => {
+            // Call the deleteUser API passing the user item ID
+            deleteCustomer(userItem[0]); // Assuming the user item ID is at data[i][0]
+          };
+          actionCell.appendChild(deleteButton);
+  
+          row.appendChild(userIdCell);
+          row.appendChild(phoneCell);
+          row.appendChild(addressCell);
+          row.appendChild(actionCell);
+  
+          userDataDiv.appendChild(row);
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching user data:', error);
+      });
+  }
+</script>
+</body>
+</html>
+
